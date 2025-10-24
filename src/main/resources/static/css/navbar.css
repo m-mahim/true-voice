@@ -1,0 +1,95 @@
+nav {
+    color: white;
+    background-color: #1f2833;
+    min-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #fc5c7d;
+}
+
+.app-name {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+nav {
+    padding: 1rem 2rem;
+    position: relative;
+    z-index: 1000;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 1002;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    /*background: rgba(255, 87, 51, 0.8);*/
+    background: #62b076;
+
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+.menu {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.menu a {
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .menu {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: #62b076;
+        flex-direction: column;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 1001;
+        gap: 5px;
+    }
+
+    .menu-toggle:checked ~ .menu {
+        max-height: 300px;
+        padding: 1rem 0;
+    }
+
+    .menu a {
+        padding: 0.8rem 2rem;
+    }
+}
