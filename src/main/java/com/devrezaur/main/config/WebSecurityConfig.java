@@ -31,6 +31,7 @@ public class WebSecurityConfig {
                 .headers(headerConfigurer -> headerConfigurer
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
+                        .requestMatchers("/h2-console/**").permitAll() // Allow access to H2 console
                         .requestMatchers("/feedback/{feedbackId}/delete").hasAnyAuthority("ROLE_ADMIN","ROLE_USER") // so that they both can delete update this /feedback/{feedbackId}/delete
                         .requestMatchers("/user/**").hasAnyAuthority("ROLE_USER")//removed admin for feedback
                         .anyRequest().permitAll())

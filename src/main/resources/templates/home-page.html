@@ -46,10 +46,20 @@
         </div>
 
         <!-- Pagination Section -->
-        <div th:if="${searchQuery == null}" id="pagination">
-            <a th:if="${currentPage > 0}" th:href="@{'/home?page=' + ${currentPage - 1}}">Previous</a>
-            <span th:text="'Page ' + (${currentPage} + 1) + ' of ' + ${totalPages}"></span>
-            <a th:if="${currentPage + 1 < totalPages}" th:href="@{'/home?page=' + ${currentPage + 1}}">Next</a>
+        <div th:if="${totalPages > 1}" id="pagination">
+            <!-- Home page pagination -->
+            <div th:if="${searchQuery == null}">
+                <a th:if="${currentPage > 0}" th:href="@{'/home?page=' + ${currentPage - 1}}">Previous</a>
+                <span th:text="'Page ' + (${currentPage} + 1) + ' of ' + ${totalPages}"></span>
+                <a th:if="${currentPage + 1 < totalPages}" th:href="@{'/home?page=' + ${currentPage + 1}}">Next</a>
+            </div>
+
+            <!-- Search results pagination -->
+            <div th:if="${searchQuery != null}">
+                <a th:if="${currentPage > 0}" th:href="@{'/search?searchQuery=' + ${searchQuery} + '&page=' + ${currentPage - 1}}">Previous</a>
+                <span th:text="'Page ' + (${currentPage} + 1) + ' of ' + ${totalPages}"></span>
+                <a th:if="${currentPage + 1 < totalPages}" th:href="@{'/search?searchQuery=' + ${searchQuery} + '&page=' + ${currentPage + 1}}">Next</a>
+            </div>
         </div>
     </div>
 

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -44,18 +43,26 @@ public class AppController {
     }
 
     @GetMapping("/search")
-    public String searchFeedbacks(@RequestParam String searchQuery, Model model) {
-        List<Feedback> feedbacks = feedbackService.searchFeedbacksByName(searchQuery);
-        model.addAttribute("feedbacks", feedbacks);
+    public String searchFeedbacks(@RequestParam String searchQuery, @RequestParam(defaultValue = "0") int page, Model model) {
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("createdAt").descending());
+        Page<Feedback> feedbackPage = feedbackService.searchFeedbacksByName(searchQuery, pageable);
+        
+        model.addAttribute("feedbacks", feedbackPage.getContent());
         model.addAttribute("searchQuery", searchQuery);
+        model.addAttribute("totalPages", feedbackPage.getTotalPages());
+        model.addAttribute("currentPage", page);
         return "home-page";
     }
 //    UserDashboard
     @GetMapping("/user/dashboard")
-    public String userDashboardPage(Model model, HttpServletRequest httpServletRequest) {
+    public String userDashboardPage(@RequestParam(defaultValue = "0") int page, Model model, HttpServletRequest httpServletRequest) {
         String userName = httpServletRequest.getUserPrincipal().getName();
-        List<Feedback> feedbacks = feedbackService.searchFeedbacksByUser(userName);
-        model.addAttribute("feedbacks", feedbacks);
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("createdAt").descending());
+        Page<Feedback> feedbackPage = feedbackService.searchFeedbacksByUser(userName, pageable);
+        
+        model.addAttribute("feedbacks", feedbackPage.getContent());
+        model.addAttribute("totalPages", feedbackPage.getTotalPages());
+        model.addAttribute("currentPage", page);
         return "user-dashboard-page";
     }
 

@@ -43,6 +43,13 @@
         <a th:href="@{'/feedback/' + ${feedback.feedbackId}}">See Full Review</a>
       </div>
     </div>
+
+    <!-- Pagination Section -->
+    <div th:if="${totalPages > 1}" id="pagination">
+      <a th:if="${currentPage > 0}" th:href="@{'/user/dashboard?page=' + ${currentPage - 1}}">Previous</a>
+      <span th:text="'Page ' + (${currentPage} + 1) + ' of ' + ${totalPages}"></span>
+      <a th:if="${currentPage + 1 < totalPages}" th:href="@{'/user/dashboard?page=' + ${currentPage + 1}}">Next</a>
+    </div>
   </div>
 
   <!-- Footer -->

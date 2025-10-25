@@ -39,6 +39,25 @@ public class FeedbackService {
         return feedbacks;
     }
 
+    // Paginated versions
+    public Page<Feedback> searchFeedbacksByName(String feedbackFor, Pageable pageable) {
+        Page<Feedback> feedbackPage = feedbackRepository.findByFeedbackForContainingIgnoreCase(feedbackFor, pageable);
+        
+        return feedbackPage.map(feedback -> {
+            feedback.setMessage(truncateMessage(feedback.getMessage()));
+            return feedback;
+        });
+    }
+
+    public Page<Feedback> searchFeedbacksByUser(String feedbackBy, Pageable pageable) {
+        Page<Feedback> feedbackPage = feedbackRepository.findByFeedbackBy(feedbackBy, pageable);
+        
+        return feedbackPage.map(feedback -> {
+            feedback.setMessage(truncateMessage(feedback.getMessage()));
+            return feedback;
+        });
+    }
+
     public Feedback getFeedbackById(UUID feedbackId) {
         return feedbackRepository.findById(feedbackId).orElse(null);
     }

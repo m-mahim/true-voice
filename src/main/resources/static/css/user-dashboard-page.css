@@ -99,3 +99,22 @@ h1 {
     cursor: pointer;
     opacity: 0.8;
 }
+
+#pagination {
+    width: fit-content;
+    margin: 20px auto 40px auto;
+}
+
+#pagination a {
+    text-decoration: none;
+    color: #fc5c7d;
+}
+
+#pagination a:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+#pagination span {
+    margin: 0 5px;
+}
